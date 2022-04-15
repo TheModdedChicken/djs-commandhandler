@@ -1,11 +1,11 @@
 <div align="center">
   <p>
-    <a href="https://www.npmjs.com/package/djs-commandhandler"><img src="https://img.shields.io/npm/v/djs-commandhandler.svg?maxAge=3600" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/djs-commandhandler"><img src="https://img.shields.io/npm/dt/djs-commandhandler.svg?maxAge=3600" alt="npm downloads" /></a>
+    <a href="https://www.npmjs.com/package/djs-util"><img src="https://img.shields.io/npm/v/djs-util.svg?maxAge=3600" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/djs-util"><img src="https://img.shields.io/npm/dt/djs-util.svg?maxAge=3600" alt="npm downloads" /></a>
   </p>
 </div>
 
-# djs-commandhandler
+# djs-util
 A command handler library for Discord.js
 
 **NOTE:** This library is still under development and does not have a stable release version
@@ -13,13 +13,13 @@ A command handler library for Discord.js
 ## Install
 This package can be installed using npm or yarn:
 
-`npm install djs-commandhandler` or `yarn add djs-commandhandler`
+`npm install djs-util` or `yarn add djs-util`
 
 ## Usage
 Basic usage goes as follows:
 ```js
 import { Client, Intents } from 'discord.js'
-import { SlashCommandHandler } from 'djs-commandhandler'
+import { SlashCommandHandler } from 'djs-util'
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
