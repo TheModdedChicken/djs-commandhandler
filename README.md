@@ -32,3 +32,13 @@ const slashCommandHandler = new SlashCommandHandler(client, "012345678912345678"
 - **directories: string[]** - `List of directories to search through`
 - **guild_id: string** - `ID of guild to handle commands on`
 - **refresh: boolean** - `Refresh commands on startup (Global commands might take longer to refresh)`
+
+### Middleware
+Command handler middleware acts as a way to verify an interaction using your own code and stop processing the interaction if it doesn't meet your requirements.
+
+Here's a basic middleware that stops the interaction if it's a button:
+```js
+slashCommandHandler.middleware((i, stop) => {
+	if (i.isButton()) stop();
+})
+```
