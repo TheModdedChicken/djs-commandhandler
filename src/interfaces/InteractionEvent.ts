@@ -6,5 +6,5 @@ export interface IInteractionEvents {
 }
 
 export interface IInteractionEventFunction {
-  (interaction?: Interaction, error?: unknown): void
+  (interaction: Interaction, error?: unknown): void
 }

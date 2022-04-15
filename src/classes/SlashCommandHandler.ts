@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { REST } from '@discordjs/rest';
 import { Client, Collection, Intents, Interaction, MessageEmbed } from 'discord.js'
-import { IInteractionEventFunction, IInteractionEvents, ISlashCommand } from '../interfaces';
+import { IInteractionEventFunction, IInteractionEvents, IInteractionMiddleware, ISlashCommand } from '../interfaces';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { Routes } from 'discord-api-types/v9';
 
@@ -19,6 +19,10 @@ export default class SlashCommandHandler {
     interactionSuccess: [],
     interactionFailed: []
   }
+
+  private _middleware: IInteractionMiddleware[] = [
+
+  ]
 
   /**
    * 
@@ -38,10 +42,19 @@ export default class SlashCommandHandler {
     this._client_id = client_id;
     this._guild_id = options?.guild_id;
     this._bot_token = bot_token;
-    if (options?.directories) this.directories = options.directories;
     this._rest = new REST({ version: '9' }).setToken(this._bot_token);
 
+    if (options?.directories) this.directories = options.directories;
+    this.loadDirectories();
+    if (options?.refresh) this.refreshCommands(this._guild_id ? false : true);
+
     this._client.on('interactionCreate', async (i: Interaction) => {
+      var stop = false;
+      for (const func of this._middleware) {
+        await func(i, () => stop = true);
+        if (stop) return;
+      }
+
       try {
         if (!i.isApplicationCommand()) return;
         const command: ISlashCommand | undefined = this._commands.get(i.commandName);
@@ -77,6 +90,12 @@ export default class SlashCommandHandler {
   }
 
   /**
+   * Add middleware which executes before interactions get processed
+   * @param callback Middleware to add
+   */
+  middleware (callback: IInteractionMiddleware) { this._middleware.push(callback); return this; }
+
+  /**
    * Set the default directories to search for slash commands in
    * @param directories Directories to search for slash commands in
    */
@@ -92,26 +111,25 @@ export default class SlashCommandHandler {
    * @param directory Directory to search for slash commands in
    */
   loadDirectory (directory: string) {
-    console.log(`Loading directory: ${directory}`)
+    console.log(`Loading directory: '${directory}'`)
     try { 
-      const commandFiles = fs.readdirSync(directory).filter(file => file.endsWith(__filename.endsWith(".ts") ? '.ts' : '.js'));
+      const commandFiles = fs.readdirSync(directory).filter(file => file.endsWith('.ts') || file.endsWith('.js'));
 
       for (const file of commandFiles) {
         const commandPath = path.join(directory, file);
-
         try {
           const command = require(commandPath);
-          if (command.default.data instanceof SlashCommandBuilder) {
+          if (command.default.data.name && command.default.data.command) {
 
             const commandName = command.default.data.name;
             this._commands.set(commandName, command.default)
-            console.warn(`Found and loaded '${commandName}' from '${file}'`)
+            console.log(`Found and loaded '${commandName}' from '${file}'`)
 
-          } else if (command.data instanceof SlashCommandBuilder) {
+          } else if (command.data.name && command.data.command) {
 
             const commandName = command.default.data.name;
             this._commands.set(commandName, command)
-            console.warn(`Found and loaded '${commandName}' from '${file}'`)
+            console.log(`Found and loaded '${commandName}' from '${file}'`)
 
           } else throw new Error(`Found '${file}' but couldn't parse it due to an invalid format.`);
 
@@ -141,11 +159,11 @@ export default class SlashCommandHandler {
    * @param global Refresh commands globally
    */
   async refreshCommands (global: boolean): Promise<void> {
-    const guild_id = global ? this._guild_id : undefined
+    const guild_id = !global ? this._guild_id : undefined
     if (guild_id === undefined && !global) return console.error("Cannot refresh guild commands because a guild ID was not found.\nPlease supply a guild ID or run a global refresh instead.")
 
     try {
-      console.log(`Refreshing ${this._guild_id ? `(/) commands for guild with id '${this._guild_id}'` : "global (/) commands"}.`);
+      console.log(`Refreshing ${guild_id ? `(/) commands for guild with id '${guild_id}'` : "global (/) commands"}.`);
   
       const jsonCommands = [];
       for (const [id, command] of this._commands) {
@@ -153,8 +171,8 @@ export default class SlashCommandHandler {
       }
   
       await this._rest.put(
-        this._guild_id ? 
-          Routes.applicationGuildCommands(this._client_id, this._guild_id) :
+        guild_id ? 
+          Routes.applicationGuildCommands(this._client_id, guild_id) :
           Routes.applicationCommands(this._client_id),
         { body: jsonCommands },
       );
