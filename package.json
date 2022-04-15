@@ -1,6 +1,6 @@
 {
-  "name": "djs-commandhandler",
-  "version": "1.0.0",
+  "name": "djs-ch",
+  "version": "1.0.0-rc1",
   "description": "Command Handler library for Discord.js",
   "main": "lib/index.js",
   "scripts": {
@@ -29,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/TheModdedChicken/djs-commandhandler/issues"
   },
-  "homepage": "https://github.com/TheModdedChicken/djs-commandhandler#readme"
+  "homepage": "https://github.com/TheModdedChicken/djs-commandhandler#readme",
+  "keywords": [
+    "discordjs",
+    "command-handler"
+  ]
 }
