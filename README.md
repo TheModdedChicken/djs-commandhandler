@@ -12,6 +12,7 @@ A command handler library for Discord.js
 
 ## Install
 This package can be installed using npm or yarn:
+
 `npm install djs-commandhandler` or `yarn add djs-commandhandler`
 
 ## Usage
