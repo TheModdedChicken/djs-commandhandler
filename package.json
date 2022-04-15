@@ -1,6 +1,6 @@
 {
   "name": "tmc-djs-util",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Command Handler library for Discord.js",
   "main": "lib/index.js",
   "scripts": {

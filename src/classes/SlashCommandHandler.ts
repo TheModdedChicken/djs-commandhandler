@@ -119,15 +119,15 @@ export default class SlashCommandHandler {
         const commandPath = path.join(directory, file);
         try {
           const command = require(commandPath);
-          if (command.default.data.name && command.default.data.command) {
+          if (command.default.data && command.default.command) {
 
             const commandName = command.default.data.name;
             this._commands.set(commandName, command.default)
             console.log(`Found and loaded '${commandName}' from '${file}'`)
 
-          } else if (command.data.name && command.data.command) {
+          } else if (command.data && command.command) {
 
-            const commandName = command.default.data.name;
+            const commandName = command.data.name;
             this._commands.set(commandName, command)
             console.log(`Found and loaded '${commandName}' from '${file}'`)
 
