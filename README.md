@@ -13,13 +13,13 @@ A command handler library for Discord.js
 ## Install
 This package can be installed using npm or yarn:
 
-`npm install @tmc/djs-util@beta` or `yarn add @tmc/djs-util@beta`
+`npm install tmc-djs-util@beta` or `yarn add tmc-djs-util@beta`
 
 ## Usage
 Basic usage goes as follows:
 ```js
 import { Client, Intents } from 'discord.js'
-import { SlashCommandHandler } from '@tmc/djs-util'
+import { SlashCommandHandler } from 'tmc-djs-util'
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
