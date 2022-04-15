@@ -3,3 +3,4 @@ package-lock.json
 lib/
 dev-notes.txt
 tmc-djs-util-*.tgz
+.npmrc

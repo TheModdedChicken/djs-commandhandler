@@ -13,7 +13,7 @@ A command handler library for Discord.js
 ## Install
 This package can be installed using npm or yarn:
 
-`npm install @tmc/djs-util` or `yarn add @tmc/djs-util`
+`npm install @tmc/djs-util@beta` or `yarn add @tmc/djs-util@beta`
 
 ## Usage
 Basic usage goes as follows:
