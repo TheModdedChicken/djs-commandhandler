@@ -1,7 +1,7 @@
 <div align="center">
   <p>
-    <a href="https://www.npmjs.com/package/@tmc/djs-util"><img src="https://img.shields.io/npm/v/@tmc/djs-util.svg?maxAge=3600" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/@tmc/djs-util"><img src="https://img.shields.io/npm/dt/@tmc/djs-util.svg?maxAge=3600" alt="npm downloads" /></a>
+    <a href="https://www.npmjs.com/package/tmc-djs-util"><img src="https://img.shields.io/npm/v/tmc-djs-util.svg?maxAge=3600" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/tmc-djs-util"><img src="https://img.shields.io/npm/dt/tmc-djs-util.svg?maxAge=3600" alt="npm downloads" /></a>
   </p>
 </div>
 
