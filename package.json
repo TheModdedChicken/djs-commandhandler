@@ -1,5 +1,5 @@
 {
-  "name": "djs-util",
+  "name": "@tmc/djs-util",
   "version": "1.0.0-rc1",
   "description": "Command Handler library for Discord.js",
   "main": "lib/index.js",
